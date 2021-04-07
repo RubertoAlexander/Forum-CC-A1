@@ -1,0 +1,21 @@
+{% extends 'index.html' %}
+
+{% block header %}
+<h1>{% block title %}Login{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+
+<body>
+    <form method="post">
+        <label for="id">ID</label>
+        <input name="id" id="id" required><br>
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" required><br>
+        <input type="submit" value="Login">
+        <input type="button" onClick="window.location.href='/register';" value="Register" />
+    </form>
+    {{ loginError }}
+</body>
+
+{% endblock %}
