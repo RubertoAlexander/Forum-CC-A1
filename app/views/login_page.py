@@ -1,6 +1,6 @@
-from flask import Flask, render_template, request, redirect
+from flask import render_template, request, redirect
 
-from app.models import firestore
+from app.models import fs_users
 from app import app
 
 @app.route('/login', methods=['GET'])
@@ -17,10 +17,10 @@ def login():
         return render_template('login.html', loginError='ID or password is invalid')
 
 def authenticate():
-    result = firestore.fetch_user_by_id(request.form['id'])
+    result = fs_users.get_user_by_id(request.form['id'])
     print(str(result))
     if result:
-        password = firestore.fetch_user_password(result[0].id)
+        password = fs_users.get_user_password(result[0].id)
         print(password)
         if password == request.form['password']:
             return True
