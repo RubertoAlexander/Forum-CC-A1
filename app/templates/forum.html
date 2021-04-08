@@ -1,0 +1,38 @@
+{% extends 'index.html' %}
+
+{% block header %}
+<h1>{% block title %}Forum{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+
+<body>
+    <img src="{{ user_image }}" alt="User Profile Image" width="120" height="120"/>
+    <a href="/user">{{ user_name }}</a>
+    <a href="/logout">Logout</a>
+
+    <form method="post" id='message' enctype="multipart/form-data">
+        <label for="subject">Subject</label>
+        <input name="subject" id="subject" required /><br>
+        <label for="message-text">Message</label>
+        <textarea id="message-text" name="message-text" rows="4" cols="20" form="message"></textarea><br>
+        <label for="image">Image</label>
+        <input type="file" id="message-image" name="message-image" accept="image/*" formenctype="multipart/form-data" / ><br>
+        <input type="submit" value="Submit">
+    </form>
+
+    {% for post in posts %}
+    <p>
+        <img src="{{ post['user_image']}}" alt="Poster Profile Image" width="120" height="120"/> {{ post['username'] }}<br>
+        {{ post['post_datetime'] }}<br>
+        {{ post['post_details'].get('subject') }}<br>
+        {{ post['post_details'].get('message') }}<br>
+
+        {% if post['post_image'] %}
+            <img src="{{ post['post_image'] }}" alt='Message Image' width="120" height="120" />
+        {% endif %}
+    </p>
+    {% endfor %}
+</body>
+
+{% endblock %}

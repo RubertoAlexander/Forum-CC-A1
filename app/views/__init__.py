@@ -1,2 +1,1 @@
-from . import login_page
-from . import register_page
+from . import login_page, register_page, forum_page, logout_page
