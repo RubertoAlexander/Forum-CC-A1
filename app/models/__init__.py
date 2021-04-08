@@ -10,4 +10,4 @@ firebase_admin.initialize_app(cred, {
 
 db = firestore.client()
 
-from . import fs_users, gcs_user_images, fs_messages
+from . import fs_users, gcs_user_images, fs_messages, gcs_message_images

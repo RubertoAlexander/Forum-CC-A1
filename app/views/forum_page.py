@@ -1,3 +1,4 @@
+import time
 from app.models import fs_messages, fs_users, gcs_message_images, gcs_user_images
 from flask import render_template, request, redirect
 
@@ -38,17 +39,12 @@ def post_message():
     subject = request.form['subject']
     message = request.form['message-text']
     image = request.files['message-image']
-    print(str(image))
 
     message_uploaded = fs_messages.add_message(user.id, subject, message)
-    image_pass = False
-    if image.filename == '':
-        image_pass = True
-    else:
-        image_pass = gcs_message_images.upload_image(image, message_uploaded)
+    print(message_uploaded)
 
-    if message_uploaded and image_pass:
-        return redirect('/')
-    else:
-        return redirect('/')
-   
+    image_pass = False
+    if image.filename != '':
+        gcs_message_images.upload_image(image, message_uploaded)
+
+    return redirect('/')
