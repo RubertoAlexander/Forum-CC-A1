@@ -6,16 +6,28 @@
 
 {% block content %}
 
-<body>
-    <form method="post">
-        <label for="id">ID</label>
-        <input name="id" id="id" required><br>
-        <label for="password">Password</label>
-        <input type="password" name="password" id="password" required><br>
-        <input type="submit" value="Login">
-        <input type="button" onClick="window.location.href='/register';" value="Register" />
+<body class="container">
+    <div class="row">
+    <div class="col-sm"></div>
+
+    <form method="post" class="container col-sm">
+        <div class="mb-3">
+            <label class="form-label" for="id">ID</label>
+            <input class="form-control" name="id" id="id" required><br>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="password">Password</label>
+            <input class="form-control" type="password" name="password" id="password" required><br>
+        </div>
+        <span><input class="btn btn-secondary" type="submit" value="Login"></span>
+        <span><input class="btn btn-secondary" type="button" onClick="window.location.href='/register';" value="Register" /></span>
+        <h2>{{ loginError }}</h2>
     </form>
-    {{ loginError }}
+    
+    
+    <div class="col-sm"></div>
+    
+</div>
 </body>
 
 {% endblock %}

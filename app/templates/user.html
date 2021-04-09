@@ -1,38 +1,48 @@
 {% extends 'index.html' %}
 
-{% block header %}
-<h1>{% block title %}User Page{% endblock %}</h1>
-{% endblock %}
-
 {% block content %}
 
-<body>
+<body class="container">
+    <div class="container row">
+        <div class="col-sm"></div>
+        <form class="col-sm" action="/user/{{ user_id }}/password" method="post">
+            <div class="mb-3">
+                <label class="form-label" for="old-password">Old Password</label>
+                <input class="form-control" type="password" name="old-password" id="old-password" required/>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="new-password">New Password</label>
+                <input class="form-control" type="password" name="new-password" id="new-password" required />
+            </div>  
+            <input class="btn btn-secondary" type="submit" value="Change">
 
-    <form action="/user/{{ user_id }}/password" method="post">
-        <label for="old-password">Old Password</label>
-        <input type="password" name="old-password" id="old-password" required/><br>
-        <label for="new-password">New Password</label>
-        <input type="password" name="new-password" id="new-password" required /><br>
-        <input type="submit" value="Change">
-    </form>
-    {% if pwd_error %}
-    <p>{{ pwd_error }}</p>
-    {% endif %}
+            {% if pwd_error %}
+            <h5>{{ pwd_error }}</h5>
+            {% endif %}
+        </form>
+        <div class="col-sm"></div>
+    </div>
 
     {% for post in posts %}
-    <form action="/user/{{ user_id }}/update/{{ post['post_details'].id }}" method="post" id="{{ post['post_details'].id }}" enctype="multipart/form-data">
-        {{ post['post_datetime'] }}<br>
-        <label for="{{ post['post_details'].id }}-subject">Subject</label>
-        <input name="{{ post['post_details'].id }}-subject" id="{{ post['post_details'].id }}-subject" value="{{ post['post_details'].get('subject') }}" required/><br>
-        <label for="{{ post['post_details'].id }}-message-text">Message</label>
-        <textarea id="{{ post['post_details'].id }}-message-text" name="{{ post['post_details'].id }}-message-text" rows="4" cols="20" form="{{ post['post_details'].id }}" >{{ post['post_details'].get('message') }}</textarea><br>
-        {% if post['post_image'] %}
-            <img src="{{ post['post_image'] }}" alt='Message Image' width="120" height="120" /><br>
-        {% endif %}
-        <label for="{{ post['post_details'].id }}-message-image">Image</label>
-        <input type="file" id="{{ post['post_details'].id }}-message-image" name="{{ post['post_details'].id }}-message-image" accept="image/*" formenctype="multipart/form-data" / ><br>
-        <input type="submit" value="Update">
-    </form>
+    <div class="container row">
+        <div class="col-md"></div>
+        <form class="col-md card" action="/user/{{ user_id }}/update/{{ post['post_details'].id }}" method="post" id="{{ post['post_details'].id }}" enctype="multipart/form-data">
+            <div class="card-body">
+                {{ post['post_datetime'] }}<br>
+                <label for="{{ post['post_details'].id }}-subject">Subject</label>
+                <input name="{{ post['post_details'].id }}-subject" id="{{ post['post_details'].id }}-subject" value="{{ post['post_details'].get('subject') }}" required/><br>
+                <label for="{{ post['post_details'].id }}-message-text">Message</label>
+                <textarea id="{{ post['post_details'].id }}-message-text" name="{{ post['post_details'].id }}-message-text" rows="4" cols="20" form="{{ post['post_details'].id }}" >{{ post['post_details'].get('message') }}</textarea><br>
+                {% if post['post_image'] %}
+                    <img src="{{ post['post_image'] }}" alt='Message Image' width="120" height="120" /><br>
+                {% endif %}
+                <label for="{{ post['post_details'].id }}-message-image">Image</label>
+                <input type="file" id="{{ post['post_details'].id }}-message-image" name="{{ post['post_details'].id }}-message-image" accept="image/*" formenctype="multipart/form-data" / ><br>
+                <input type="submit" value="Update">
+            </div>
+        </form>
+        <div class="col-md"></div>
+    </div>
     {% endfor %}
 </body>
 

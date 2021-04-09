@@ -1,37 +1,63 @@
 {% extends 'index.html' %}
 
-{% block header %}
-<h1>{% block title %}Forum{% endblock %}</h1>
-{% endblock %}
 
 {% block content %}
 
-<body>
-    <img src="{{ user_image }}" alt="User Profile Image" width="120" height="120"/>
-    <a href="/user/{{ user_id }}">{{ user_name }}</a>
-    <a href="/logout">Logout</a>
+<body class="container">
+    <div class="container row">
+        <div class="col-sm"></div>
+        <div class="col-sm"></div>
+        <ul class="nav col-sm">
+            <li class="nav-item">
+                <a class="nav-link" href="/user/{{ user_id }}">{{ user_name }}</a>
+            </li>
+            <li class="nav-item">
+                <button class="btn btn-secondary"><a class="nav-link" href="/logout">Logout</a></button>
+            </li>
+            <li class="nav-item">
+                <img class="float-start" src="{{ user_image }}" alt="User Profile Image" width="120" height="120"/>
+            </li>
+        </ul>
+    </div>
+    <div class="container row">
+        <div class="col-sm"></div>
+        <form class="container col-sm" method="post" id='message' enctype="multipart/form-data">
+            <div class="mb-3">
+                <label class="form-label" for="subject">Subject</label>
+                <input class="form-control" name="subject" id="subject" required />
+            </div>
 
-    <form method="post" id='message' enctype="multipart/form-data">
-        <label for="subject">Subject</label>
-        <input name="subject" id="subject" required /><br>
-        <label for="message-text">Message</label>
-        <textarea id="message-text" name="message-text" rows="4" cols="20" form="message"></textarea><br>
-        <label for="image">Image</label>
-        <input type="file" id="message-image" name="message-image" accept="image/*" formenctype="multipart/form-data" / ><br>
-        <input type="submit" value="Submit">
-    </form>
+            <div class="mb-3">
+                <label class="form-label" for="message-text">Message</label>
+                <textarea class="form-control" id="message-text" name="message-text" rows="4" cols="20" form="message"></textarea>
+            </div>
 
+            <div class="mb-3">
+                <label class="form-label" for="image">Image</label>
+                <input class="form-control" type="file" id="message-image" name="message-image" accept="image/*" formenctype="multipart/form-data" / >
+            </div>
+
+            <input class="btn btn-secondary" type="submit" value="Submit">
+        </form>
+        <div class="col-sm"></div>
+    </div>
     {% for post in posts %}
-    <p>
-        <img src="{{ post['user_image']}}" alt="Poster Profile Image" width="120" height="120"/> {{ post['username'] }}<br>
-        {{ post['post_datetime'] }}<br>
-        {{ post['post_details'].get('subject') }}<br>
-        {{ post['post_details'].get('message') }}<br>
-
-        {% if post['post_image'] %}
-            <img src="{{ post['post_image'] }}" alt='Message Image' width="120" height="120" />
-        {% endif %}
-    </p>
+    <div class="container row">
+        <div class="col-md"></div>
+        <div class="col-md card">
+            <div class="card-body">
+                <img class="card-img-top" src="{{ post['user_image']}}" alt="Poster Profile Image" width="120" height="120"/> {{ post['username'] }}
+                <h5 class="card-title">{{ post['post_details'].get('subject') }}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{ post['post_datetime'] }}</h6>
+                <p class="card-text">{{ post['post_details'].get('message') }}</p>
+                {% if post['post_image'] %}
+                    <img class="card-img-bottom" src="{{ post['post_image'] }}" alt='Message Image' width="120" height="120" />
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-md"></div>
+        
+    </div>
     {% endfor %}
 </body>
 
