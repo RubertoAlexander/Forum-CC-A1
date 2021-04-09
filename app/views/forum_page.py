@@ -26,6 +26,7 @@ def forum_page():
             })
         
         return render_template('forum.html', 
+            user_id=user_id,
             user_name=username,
             user_image=user_image_url,
             posts=post_list

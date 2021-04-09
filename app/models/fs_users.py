@@ -4,11 +4,15 @@ COLLECTION = u'users'
 
 def get_user_by_id(id):
     query = db.collection(COLLECTION).where(u'id', u'==', id).limit(1).get()
+    print(query)
     user_list = list(query)
     if len(user_list) > 0:
         return user_list[0]
     else:
         return None
+
+def get_user_doc_ref(key):
+    return db.collection(COLLECTION).document(key)
 
 def get_user_by_username(username) -> list:
     query = db.collection(COLLECTION).where(u'user_name', u'==', username).limit(1).get()

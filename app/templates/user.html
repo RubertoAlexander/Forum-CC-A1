@@ -1,0 +1,39 @@
+{% extends 'index.html' %}
+
+{% block header %}
+<h1>{% block title %}User Page{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+
+<body>
+
+    <form action="/user/{{ user_id }}/password" method="post">
+        <label for="old-password">Old Password</label>
+        <input type="password" name="old-password" id="old-password" required/><br>
+        <label for="new-password">New Password</label>
+        <input type="password" name="new-password" id="new-password" required /><br>
+        <input type="submit" value="Change">
+    </form>
+    {% if pwd_error %}
+    <p>{{ pwd_error }}</p>
+    {% endif %}
+
+    {% for post in posts %}
+    <form action="/user/{{ user_id }}/update/{{ post['post_details'].id }}" method="post" id="{{ post['post_details'].id }}" enctype="multipart/form-data">
+        {{ post['post_datetime'] }}<br>
+        <label for="{{ post['post_details'].id }}-subject">Subject</label>
+        <input name="{{ post['post_details'].id }}-subject" id="{{ post['post_details'].id }}-subject" value="{{ post['post_details'].get('subject') }}" required/><br>
+        <label for="{{ post['post_details'].id }}-message-text">Message</label>
+        <textarea id="{{ post['post_details'].id }}-message-text" name="{{ post['post_details'].id }}-message-text" rows="4" cols="20" form="{{ post['post_details'].id }}" >{{ post['post_details'].get('message') }}</textarea><br>
+        {% if post['post_image'] %}
+            <img src="{{ post['post_image'] }}" alt='Message Image' width="120" height="120" /><br>
+        {% endif %}
+        <label for="{{ post['post_details'].id }}-message-image">Image</label>
+        <input type="file" id="{{ post['post_details'].id }}-message-image" name="{{ post['post_details'].id }}-message-image" accept="image/*" formenctype="multipart/form-data" / ><br>
+        <input type="submit" value="Update">
+    </form>
+    {% endfor %}
+</body>
+
+{% endblock %}
